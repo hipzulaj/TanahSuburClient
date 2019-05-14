@@ -15,21 +15,60 @@ class HomeController extends Controller
     return view('index', $this->getSensorData());
   }
 
+  public function getIndicator(){
+    $cookie = 'Apel';
+    $requestIndicator = $this->client->get('http://localhost:8001/getIndicator/'.$cookie);
+    $responseIndicator = $requestIndicator->getBody()->getContents();
+    $indicator_result = json_decode($responseIndicator, true);
+    // echo $responseIndicator;
+    // echo $indicator_result['id'];
+    return $indicator_result;
+  }
+
   public function getSensorData(){
     $request = $this->client->get('http://localhost:8001/home');
     $response = $request->getBody()->getContents();
-    $result = json_decode($response, true);
+    $sensor_result = json_decode($response, true);
     // echo $response;
 
     $sensor = [
-      'id' => $result['id'],
-      'ec' => $result['ec_sensor'],
-      'temp' => $result['temp_sensor'],
-      'ph' => $result['ph_sensor'],
-      'humid' => $result['humid_sensor'],
-      'time' => $result['waktu_diambil']
+      'id' => $sensor_result['id'],
+      'ec' => $sensor_result['ec_sensor'],
+      'temp' => $sensor_result['temp_sensor'],
+      'ph' => $sensor_result['ph_sensor'],
+      'humid' => $sensor_result['humid_sensor'],
+      'time' => $sensor_result['waktu_diambil'],
+      'ec_status' => 'OK',
+      'ph_status' => 'OK',
+      'temp_status' => 'OK',
+      'humid_status' => 'OK'
     ];
 
-    return ['sensor' => $sensor];
+    $indicator = $this->getIndicator();
+
+    if($sensor_result['ec_sensor'] < $indicator['0']['batas_bawah_ec'] || $sensor_result['ec_sensor'] > $indicator['0']['batas_atas_ec']){
+      $sensor['ec_status'] = 'Not OK';
+    }
+    if($sensor_result['ph_sensor'] < $indicator['0']['batas_bawah_ph'] || $sensor_result['ph_sensor'] > $indicator['0']['batas_atas_ph']){
+      $sensor['ph_status'] = 'Not OK';
+    }
+    if($sensor_result['temp_sensor'] < $indicator['0']['batas_bawah_temp'] || $sensor_result['temp_sensor'] > $indicator['0']['batas_atas_temp']){
+      $sensor['temp_status'] = 'Not OK';
+    }
+    if($sensor_result['humid_sensor'] < $indicator['0']['batas_bawah_humid'] || $sensor_result['humid_sensor'] > $indicator['0']['batas_atas_humid']){
+      $sensor['humid_status'] = 'Not OK';
+    }
+    // else{
+    //   $sensor = [
+    //     'ec_status' => 'OK',
+    //     'ph_status' => 'OK',
+    //     'temp_status' => 'OK',
+    //     'humid_status' => 'OK'
+    //   ];
+    // }
+
+    print_r($sensor);
+    // echo $indicator['id'];
+    // return ['sensor' => $sensor];
   }
 }
