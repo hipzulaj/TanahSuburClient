@@ -813,33 +813,33 @@ ul.breadcrumbs {
 }
 
 .single-report .icon-yes {
-    font-size: 32px;
+    font-size: 20px;
     color: #fff;
     background: green;
-    height: 95px;
-    width: 100px;
+    height: 65px;
+    width: 70px;
     text-align: right;
     padding-top: 35px;
     padding-right: 18px;
     border-radius: 50%;
     position: absolute;
-    left: -39px;
-    top: -30px;
+    left: -28px;
+    top: -35px;
 }
 
 .single-report .icon-no {
-    font-size: 32px;
+    font-size: 18px;
     color: #fff;
     background: red; /*var(--primary-color) */
-    height: 95px;
-    width: 100px;
+    height: 65px;
+    width: 70px;
     text-align: right;
     padding-top: 35px;
     padding-right: 18px;
     border-radius: 50%;
     position: absolute;
-    left: -39px;
-    top: -30px;
+    left: -28px;
+    top: -35px;
 }
 
 .s-report-title {

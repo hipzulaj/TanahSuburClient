@@ -11,7 +11,6 @@
 |
 */
 
-Route::view('/', 'index');
-Route::view('home', 'home');
+Route::get('/', 'HomeController@index');
 Route::get('/testindikator', 'HomeController@getIndicator');
 Route::get('/testsensor', 'HomeController@getSensorData');

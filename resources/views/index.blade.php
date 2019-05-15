@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="Monitoring Keadaan Tanah">
+    <meta name="theme-color" content="#2F3BA2" />
     <title>srtdash - ICO Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{url('images/icon/favicon.ico')}}">
@@ -23,6 +25,8 @@
     <link rel="stylesheet" href="{{url('css/responsive.css')}}">
     <!-- modernizr css -->
     <script src="{{url('js/vendor/modernizr-2.8.3.min.js')}}"></script>
+    <link rel="manifest" href="/manifest.json">
+
 </head>
 
 <body>
@@ -138,13 +142,16 @@
                         <div class="col-12">
                             <div class="single-report mb-xs-30">
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div>
+                                  <?php if($sensor['nilai'] <= 50){ ?>
+                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                  <?php }else{ ?>
+                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div><?php }?>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h2 class="header-title mb-0">Total Nilai</h2>
-                                        <p><?php echo 'Waktu Update : '.$sensor['time']?></p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
-                                        <h2>Value</h2>
+                                        <h2><?php echo $sensor['nilai']?></h2>
+                                        <p><?php echo $sensor['time']?></p>
                                     </div>
                                 </div>
                             </div>
@@ -156,13 +163,16 @@
                         <div class="col-md-6">
                             <div class="single-report mb-xs-30">
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
+                                  <?php if($sensor['ec_status'] == 'Not OK'){ ?>
                                     <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                  <?php }else{ ?>
+                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Sensor EC</h4>
-                                        <p><?php echo $sensor['time']?></p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
                                         <h2><?php echo $sensor['ec']; ?></h2>
+                                        <p><?php echo $sensor['time']?></p>
                                     </div>
                                 </div>
                             </div>
@@ -170,13 +180,16 @@
                         <div class="col-md-6">
                             <div class="single-report mb-xs-30">
                                 <div class="s-report-inner pr--20 pt--30 mb-3">
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div>
+                                  <?php if($sensor['ph_status'] == 'Not OK'){ ?>
+                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                  <?php }else{ ?>
+                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
                                     <div class="s-report-title d-flex justify-content-between">
                                         <h4 class="header-title mb-0">Sensor pH</h4>
-                                        <p><?php echo $sensor['time']?></p>
                                     </div>
                                     <div class="d-flex justify-content-between pb-2">
                                         <h2><?php echo $sensor['ph']; ?></h2>
+                                        <p><?php echo $sensor['time']?></p>
                                     </div>
                                 </div>
                             </div>
@@ -186,13 +199,16 @@
                       <div class="col-md-6 ">
                           <div class="single-report mb-xs-30">
                               <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div>
+                                <?php if($sensor['temp_status'] == 'Not OK'){ ?>
+                                  <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                <?php }else{ ?>
+                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
                                   <div class="s-report-title d-flex justify-content-between">
                                       <h4 class="header-title mb-0">Sensor Temperatur</h4>
-                                      <p><?php echo $sensor['time']?></p>
                                   </div>
                                   <div class="d-flex justify-content-between pb-2">
                                       <h2><?php echo $sensor['temp']; ?></h2>
+                                      <p><?php echo $sensor['time']?></p>
                                   </div>
                               </div>
                           </div>
@@ -200,13 +216,16 @@
                       <div class="col-md-6 ">
                           <div class="single-report mb-xs-30">
                               <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div>
+                                <?php if($sensor['humid_status'] == 'Not OK'){ ?>
+                                  <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                <?php }else{ ?>
+                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
                                   <div class="s-report-title d-flex justify-content-between">
                                       <h4 class="header-title mb-0">Sensor Kelembapan</h4>
-                                      <p><?php echo $sensor['time']?></p>
                                   </div>
                                   <div class="d-flex justify-content-between pb-2">
-                                      <h2><?php echo $sensor['humid']; ?></h2>
+                                      <h2><?php $humid = $sensor['humid']*100; echo $humid.'%'; ?></h2>
+                                      <p><?php echo $sensor['time']?></p>
                                   </div>
                               </div>
                           </div>
