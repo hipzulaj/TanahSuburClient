@@ -111,11 +111,9 @@
                                     </div>
                                 </div>
                             </li>
-                            <a href="{{url('settings')}}">
-                              <li class="settings-btn">
+                            <li class="settings-btn">
                                 <i class="ti-settings"></i>
-                              </li>
-                            </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -129,7 +127,7 @@
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
                                 <li><a href="index.html">Home</a></li>
-                                <li><span>Dashboard</span></li>
+                                <li><span>Settings</span></li>
                             </ul>
                         </div>
                     </div>
@@ -138,103 +136,27 @@
             <!-- page title area end -->
             <div class="main-content-inner">
                 <!-- sales report area start -->
-                <div class="sales-report-area mt-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <?php if($sensor['nilai'] <= 50){ ?>
-                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                  <?php }else{ ?>
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div><?php }?>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h2 class="header-title mb-0">Total Nilai untuk tanaman <?php echo $sensor['tanaman']?></h2>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h2><?php echo $sensor['nilai']?></h2>
-                                        <p><?php echo $sensor['time']?></p>
-                                    </div>
+                <div class="col-12 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Disabled forms</h4>
+                            <form action="{{url('ubahtanaman')}}" method="post">
+                              {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Indikator Tanaman Terpilih</label>
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="<?php echo $tanaman[0]['dipilih'];?>">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sales-report-area mt-5 mb-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <?php if($sensor['ec_status'] == 'Not OK'){ ?>
-                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                  <?php }else{ ?>
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h4 class="header-title mb-0">Sensor EC</h4>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h2><?php echo $sensor['ec']; ?></h2>
-                                        <p>Nilai optimal <?php echo $sensor['batas_bawah_ec'].' - '.$sensor['batas_atas_ec']?></p>
-                                        <p><?php echo $sensor['time']?></p>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="disabledSelect">Disabled select menu</label>
+                                    <select name="tanaman" id="disabledSelect" class="form-control">
+                                      @foreach (array_slice($tanaman,1) as $plant)
+                                        <option value="{{$plant['nama_tanaman']}}">{{ $plant['nama_tanaman'] }}</option>
+                                      @endforeach
+                                    </select>
                                 </div>
-                            </div>
+                                <button type="submit" class="btn btn-primary mt-4 pl-4 pr-4">Submit</button>
+                            </form>
                         </div>
-                        <div class="col-md-6">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <?php if($sensor['ph_status'] == 'Not OK'){ ?>
-                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                  <?php }else{ ?>
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h4 class="header-title mb-0">Sensor pH</h4>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h2><?php echo $sensor['ph']; ?></h2>
-                                        <p>Nilai optimal <?php echo $sensor['batas_bawah_ph'].' - '.$sensor['batas_atas_ph']?></p>
-                                        <p><?php echo $sensor['time']?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 ">
-                          <div class="single-report mb-xs-30">
-                              <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <?php if($sensor['temp_status'] == 'Not OK'){ ?>
-                                  <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                <?php }else{ ?>
-                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                  <div class="s-report-title d-flex justify-content-between">
-                                      <h4 class="header-title mb-0">Sensor Temperatur</h4>
-                                  </div>
-                                  <div class="d-flex justify-content-between pb-2">
-                                      <h2><?php echo $sensor['temp']; ?></h2>
-                                      <p>Nilai optimal <?php echo $sensor['batas_bawah_temp'].' - '.$sensor['batas_atas_temp']?></p>
-                                      <p><?php echo $sensor['time']?></p>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-6 ">
-                          <div class="single-report mb-xs-30">
-                              <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <?php if($sensor['humid_status'] == 'Not OK'){ ?>
-                                  <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                <?php }else{ ?>
-                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                  <div class="s-report-title d-flex justify-content-between">
-                                      <h4 class="header-title mb-0">Sensor Kelembapan</h4>
-                                  </div>
-                                  <div class="d-flex justify-content-between pb-2">
-                                      <h2><?php $humid = $sensor['humid']*100; echo $humid.'%'; ?></h2>
-                                      <p>Nilai optimal <?php echo $sensor['batas_bawah_humid'].' - '.$sensor['batas_atas_humid']?></p>
-                                      <p><?php echo $sensor['time']?></p>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
                     </div>
                 </div>
                 <!-- sales report area end -->
@@ -265,16 +187,15 @@
     <script src="{{url('js/scripts.js')}}"></script>
 
     <!-- test -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-          .then((reg) => {
-            console.log('Service worker registered.', reg);
-          });
-        });
+    <!-- <script>
+      var items = document.querySelectorAll("#list li");
+      for(var i = 0; i < items.length; i++)
+      {
+          items[i].onclick = function(){
+              document.getElementById("txt").value = this.innerHTML;
+          };
       }
-    </script>
+    </script> -->
 </body>
 
 </html>

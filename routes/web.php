@@ -14,3 +14,6 @@
 Route::get('/', 'HomeController@index');
 Route::get('/testindikator', 'HomeController@getIndicator');
 Route::get('/testsensor', 'HomeController@getSensorData');
+Route::get('/settings', 'SettingsController@index');
+Route::get('/test', 'SettingsController@getTanamanList');
+Route::post('/ubahtanaman', 'SettingsController@ubahTanaman');
