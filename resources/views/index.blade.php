@@ -6,7 +6,12 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Monitoring Keadaan Tanah">
     <meta name="theme-color" content="#2F3BA2" />
-    <title>srtdash - ICO Dashboard</title>
+    <!-- CODELAB: Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Weather PWA">
+    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+    <title>TanahSubur Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{url('images/icon/favicon.ico')}}">
     <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
@@ -26,6 +31,10 @@
     <!-- modernizr css -->
     <script src="{{url('js/vendor/modernizr-2.8.3.min.js')}}"></script>
     <link rel="manifest" href="/manifest.json">
+    <!--Carrousel -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -138,105 +147,132 @@
             <!-- page title area end -->
             <div class="main-content-inner">
                 <!-- sales report area start -->
-                <div class="sales-report-area mt-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <?php if($sensor['nilai'] <= 50){ ?>
-                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                  <?php }else{ ?>
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div><?php }?>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h2 class="header-title mb-0">Total Nilai untuk tanaman <?php echo $sensor['tanaman']?></h2>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h2><?php echo $sensor['nilai']?></h2>
-                                        <p><?php echo $sensor['time']?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sales-report-area mt-5 mb-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <?php if($sensor['ec_status'] == 'Not OK'){ ?>
-                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                  <?php }else{ ?>
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h4 class="header-title mb-0">Sensor EC</h4>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h2><?php echo $sensor['ec']; ?></h2>
-                                        <p>Nilai optimal <?php echo $sensor['batas_bawah_ec'].' - '.$sensor['batas_atas_ec']?></p>
-                                        <p><?php echo $sensor['time']?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="single-report mb-xs-30">
-                                <div class="s-report-inner pr--20 pt--30 mb-3">
-                                  <?php if($sensor['ph_status'] == 'Not OK'){ ?>
-                                    <div class="icon-no"><i class="fa fa-warning"></i></div>
-                                  <?php }else{ ?>
-                                    <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                    <div class="s-report-title d-flex justify-content-between">
-                                        <h4 class="header-title mb-0">Sensor pH</h4>
-                                    </div>
-                                    <div class="d-flex justify-content-between pb-2">
-                                        <h2><?php echo $sensor['ph']; ?></h2>
-                                        <p>Nilai optimal <?php echo $sensor['batas_bawah_ph'].' - '.$sensor['batas_atas_ph']?></p>
-                                        <p><?php echo $sensor['time']?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 ">
-                          <div class="single-report mb-xs-30">
-                              <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <?php if($sensor['temp_status'] == 'Not OK'){ ?>
-                                  <div class="icon-no"><i class="fa fa-warning"></i></div>
+                      <div class="sales-report-area mt-5">
+                          <div class="row">
+                              <div class="col-12">
+                                <?php if($sensor['nilai'] <= '50'){ ?>
+                                  <div class="single-report-nok mb-xs-30">
+                                <?php }else if($sensor['nilai'] > '50' && $sensor['nilai'] <= '75'){ ?>
+                                  <div class="single-report-pas mb-xs-30">
                                 <?php }else{ ?>
-                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                  <div class="s-report-title d-flex justify-content-between">
-                                      <h4 class="header-title mb-0">Sensor Temperatur</h4>
-                                  </div>
-                                  <div class="d-flex justify-content-between pb-2">
-                                      <h2><?php echo $sensor['temp']; ?></h2>
-                                      <p>Nilai optimal <?php echo $sensor['batas_bawah_temp'].' - '.$sensor['batas_atas_temp']?></p>
-                                      <p><?php echo $sensor['time']?></p>
+                                  <div class="single-report-ok mb-xs-30"><?php } ?>
+                                      <div class="s-report-inner pr--20 pt--30 mb-3">
+                                        <?php if($sensor['nilai'] <= '50'){ ?>
+                                          <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                        <?php }elseif($sensor['nilai'] > '50' && $sensor['nilai'] <= '75'){ ?>
+                                          <div class="icon-pas"><i class="fa fa-warning"></i></div>
+                                        <?php }else{ ?>
+                                          <div class="icon-yes"><i class="fas fa-check-circle"></i></div><?php }?>
+                                          <div class="s-report-title d-flex justify-content-between">
+                                            <?php if($sensor['nilai'] > '50' && $sensor['nilai'] <= '75'){ ?>
+                                              <h4 class="header-title-pas mb-0">Total Nilai untuk tanaman <?php echo $sensor['tanaman']?></h2>
+                                            <?php }else{?>
+                                              <h4 class="header-title mb-0">Total Nilai untuk tanaman <?php echo $sensor['tanaman']?></h2><?php }?>
+                                          </div>
+                                        <?php if($sensor['nilai'] > '50' && $sensor['nilai'] <= '75'){ ?>
+                                          <div class="d-flex-pas justify-content-between pb-2">
+                                        <?php }else{?>
+                                          <div class="d-flex justify-content-between pb-2"><?php }?>
+                                              <h2><?php echo $sensor['nilai']?></h2>
+                                              <p><?php echo $sensor['time']?></p>
+                                          </div>
+                                      </div>
                                   </div>
                               </div>
                           </div>
                       </div>
-                      <div class="col-md-6 ">
-                          <div class="single-report mb-xs-30">
-                              <div class="s-report-inner pr--20 pt--30 mb-3">
-                                <?php if($sensor['humid_status'] == 'Not OK'){ ?>
-                                  <div class="icon-no"><i class="fa fa-warning"></i></div>
+                      <div class="sales-report-area mt-5 mb-5">
+                          <div class="row">
+                              <div class="col-md-6">
+                                <?php if($sensor['ec_status'] == 'Not OK'){ ?>
+                                  <div class="single-report-nok mb-xs-30">
                                 <?php }else{ ?>
-                                  <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
-                                  <div class="s-report-title d-flex justify-content-between">
-                                      <h4 class="header-title mb-0">Sensor Kelembapan</h4>
+                                  <div class="single-report-ok mb-xs-30"><?php } ?>
+                                      <div class="s-report-inner pr--20 pt--30 mb-3">
+                                        <?php if($sensor['ec_status'] == 'Not OK'){ ?>
+                                          <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                        <?php }else{ ?>
+                                          <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
+                                          <div class="s-report-title d-flex justify-content-between">
+                                              <h4 class="header-title mb-0">Sensor EC</h4>
+                                          </div>
+                                          <div class="d-flex justify-content-between pb-2">
+                                              <h2><?php echo $sensor['ec']; ?></h2>
+                                              <p>Nilai optimal <?php echo $sensor['batas_bawah_ec'].' - '.$sensor['batas_atas_ec']?></p>
+                                              <p><?php echo $sensor['time']?></p>
+                                          </div>
+                                      </div>
                                   </div>
-                                  <div class="d-flex justify-content-between pb-2">
-                                      <h2><?php $humid = $sensor['humid']*100; echo $humid.'%'; ?></h2>
-                                      <p>Nilai optimal <?php echo $sensor['batas_bawah_humid'].' - '.$sensor['batas_atas_humid']?></p>
-                                      <p><?php echo $sensor['time']?></p>
+                              </div>
+                              <div class="col-md-6">
+                                <?php if($sensor['ph_status'] == 'Not OK'){ ?>
+                                  <div class="single-report-nok mb-xs-30">
+                                <?php }else{ ?>
+                                  <div class="single-report-ok mb-xs-30"><?php } ?>
+                                      <div class="s-report-inner pr--20 pt--30 mb-3">
+                                        <?php if($sensor['ph_status'] == 'Not OK'){ ?>
+                                          <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                        <?php }else{ ?>
+                                          <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
+                                          <div class="s-report-title d-flex justify-content-between">
+                                              <h4 class="header-title mb-0">Sensor pH</h4>
+                                          </div>
+                                          <div class="d-flex justify-content-between pb-2">
+                                              <h2><?php echo $sensor['ph']; ?></h2>
+                                              <p>Nilai optimal <?php echo $sensor['batas_bawah_ph'].' - '.$sensor['batas_atas_ph']?></p>
+                                              <p><?php echo $sensor['time']?></p>
+                                          </div>
+                                      </div>
                                   </div>
                               </div>
                           </div>
+                          <div class="row">
+                            <div class="col-md-6 ">
+                              <?php if($sensor['temp_status'] == 'Not OK'){ ?>
+                                <div class="single-report-nok mb-xs-30">
+                              <?php }else{ ?>
+                                <div class="single-report-ok mb-xs-30"><?php } ?>
+                                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                                      <?php if($sensor['temp_status'] == 'Not OK'){ ?>
+                                        <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                      <?php }else{ ?>
+                                        <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
+                                        <div class="s-report-title d-flex justify-content-between">
+                                            <h4 class="header-title mb-0">Sensor Temperatur</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-between pb-2">
+                                            <h2><?php echo $sensor['temp']; ?></h2>
+                                            <p>Nilai optimal <?php echo $sensor['batas_bawah_temp'].' - '.$sensor['batas_atas_temp']?></p>
+                                            <p><?php echo $sensor['time']?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                              <?php if($sensor['humid_status'] == 'Not OK'){ ?>
+                                <div class="single-report-nok mb-xs-30">
+                              <?php }else{ ?>
+                                <div class="single-report-ok mb-xs-30"><?php } ?>
+                                    <div class="s-report-inner pr--20 pt--30 mb-3">
+                                      <?php if($sensor['humid_status'] == 'Not OK'){ ?>
+                                        <div class="icon-no"><i class="fa fa-warning"></i></div>
+                                      <?php }else{ ?>
+                                        <div class="icon-yes"><i class="fas fa-check-circle"></i></div> <?php } ?>
+                                        <div class="s-report-title d-flex justify-content-between">
+                                            <h4 class="header-title mb-0">Sensor Kelembapan</h4>
+                                        </div>
+                                        <div class="d-flex justify-content-between pb-2">
+                                            <h2><?php $humid = $sensor['humid']*100; echo $humid.'%'; ?></h2>
+                                            <p>Nilai optimal <?php echo $sensor['batas_bawah_humid'].' - '.$sensor['batas_atas_humid']?></p>
+                                            <p><?php echo $sensor['time']?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
                       </div>
                     </div>
-                </div>
+                  </div>
                 <!-- sales report area end -->
             </div>
         </div>
@@ -274,6 +310,30 @@
           });
         });
       }
+    </script>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+      var OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "ad49c20e-4ff5-4a5f-b374-7404ce2cfde4",
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      OneSignal.push(function() {
+  /* These examples are all valid */
+      OneSignal.isPushNotificationsEnabled(function(isEnabled) {
+        if (isEnabled)
+          console.log("Push notifications are enabled!");
+        else{
+          console.log("Push notifications are not enabled yet.");    
+          OneSignal.push(function() {
+            OneSignal.showSlidedownPrompt();
+          });
+        }
+      });
+    });
     </script>
 </body>
 

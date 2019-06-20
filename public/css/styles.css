@@ -802,8 +802,36 @@ ul.breadcrumbs {
 
 /*-------------------- 2.4 Fact Area ------------------- */
 
-.single-report {
-    background: #fff;
+.d-flex p{
+  color:#fff;
+}
+
+.d-flex h2{
+  color:#fff;
+}
+
+.d-flex-pas p{
+  color:#000;
+}
+
+.d-flex-pas h2{
+  color:#000;
+}
+
+.single-report-ok{
+    background: green;
+    overflow: hidden;
+    position: relative;
+}
+
+.single-report-pas{
+    background: yellow;
+    overflow: hidden;
+    position: relative;
+}
+
+.single-report-nok{
+    background: red;
     overflow: hidden;
     position: relative;
 }
@@ -812,8 +840,8 @@ ul.breadcrumbs {
     padding-left: 85px;
 }
 
-.single-report .icon-yes {
-    font-size: 20px;
+.single-report-ok .icon-yes {
+    font-size: 32px;
     color: #fff;
     background: green;
     height: 65px;
@@ -823,12 +851,27 @@ ul.breadcrumbs {
     padding-right: 18px;
     border-radius: 50%;
     position: absolute;
-    left: -28px;
-    top: -35px;
+    left: 5px;
+    top: -25px;
 }
 
-.single-report .icon-no {
-    font-size: 18px;
+.single-report-pas .icon-pas {
+    font-size: 32px;
+    color: #000;
+    background: yellow;
+    height: 65px;
+    width: 70px;
+    text-align: right;
+    padding-top: 35px;
+    padding-right: 18px;
+    border-radius: 50%;
+    position: absolute;
+    left: 5px;
+    top: -25px;
+}
+
+.single-report-nok .icon-no {
+    font-size: 32px;
     color: #fff;
     background: red; /*var(--primary-color) */
     height: 65px;
@@ -838,7 +881,7 @@ ul.breadcrumbs {
     padding-right: 18px;
     border-radius: 50%;
     position: absolute;
-    left: -28px;
+    left: 5px;
     top: -35px;
 }
 
@@ -851,7 +894,17 @@ ul.breadcrumbs {
     font-size: 18px;
     font-weight: 600;
     letter-spacing: 0;
-    color: #333;
+    color: #fff;
+    text-transform: capitalize;
+    margin-bottom: 17px;
+}
+
+.header-title-pas {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: #000;
     text-transform: capitalize;
     margin-bottom: 17px;
 }

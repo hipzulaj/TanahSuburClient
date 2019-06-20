@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\SettingsController;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -14,7 +16,10 @@ class HomeController extends Controller
 
   public function index(Request $request){
     $tanaman = $request->cookie('dipilih');
-    if($tanaman == ''){
+    if(Session::get('status') != 'login'){
+      return redirect('/login');
+    }
+    else if($tanaman == ''){
       // echo 'a';
       return redirect()->action('SettingsController@index');
     }
@@ -24,11 +29,11 @@ class HomeController extends Controller
   }
 
   public function getSensorData($tanaman){
-    $request = $this->client->get('http://localhost:8001/getsensor/'.$tanaman);
+    $request = $this->client->get('http://localhost:8001/getsensor/'.$tanaman.'?token=');
     $response = $request->getBody()->getContents();
     $sensor_result = json_decode($response, true);
     // echo $response;
-
+    
     $sensor = [
       'id' => $sensor_result['id'],
       'ec' => $sensor_result['ec'],
@@ -54,4 +59,20 @@ class HomeController extends Controller
     // print_r($sensor);
     return ['sensor' => $sensor];
   }
+
+  public function testCookie(){
+    $value = Cookie::get('dipilih');
+    echo $value;
+  }
+
+  // public function getSensorData($tanaman){
+  //   $request = $this->client->get('http://localhost:8001/home/'.'?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDEvbG9naW4iLCJpYXQiOjE1NjA3NjM3OTIsImV4cCI6MTU2MDc2NzM5MiwibmJmIjoxNTYwNzYzNzkyLCJqdGkiOiJWMzZvRmRUMDR4S3hBYjRuIiwic3ViIjoyLCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.XXC0oZoxYB3FlSCA7boGRYz3fesHOhss3M479gwoEkA');
+  //   $response = $request->getBody()->getContents();
+  //   return ['sensor' => $sensor];
+  // }
+  // array(
+  //   'headers'=>array('Content-Type'=>'application/json'),
+  //   'headers'=>array(''=>'')
+  //   'json'=>array('someData'=>'xxxxx','moreData'=>'zzzzzzz')
+  //   )
 }
