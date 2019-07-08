@@ -12,6 +12,7 @@ class userAuth extends Controller
     public function __construct()
     {
         $this->client = new \GuzzleHttp\Client();
+        $this->apiAddress = "localhost:8001";
     }
 
     public function registUser(){
@@ -29,7 +30,7 @@ class userAuth extends Controller
         );
 
 
-        $request = $this->client->post('http://localhost:8001/login', $user_auth);
+        $request = $this->client->post($this->apiAddress.'/login', $user_auth);
         $response = $request->getBody()->getContents();
         $result = json_decode($response, true);
 
@@ -37,10 +38,19 @@ class userAuth extends Controller
             Session::put('username',$result['username']);
             Session::put('token',$result[0]['token']);
             Session::put('status',$result['status']);
-            echo Session::get('token');
+            Session::put('role', $result['role']);
+            return redirect('/');
         }
         else{
             return redirect('test')->with('alert','Password atau Email, Salah !');
         }
+    }
+
+    public function logoutUser(){
+        Session::flush('username');
+        Session::flush('token');
+        Session::flush('status');
+        Session::flush('role');
+        return redirect('/login');
     }
 }

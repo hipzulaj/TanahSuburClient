@@ -6,12 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Monitoring Keadaan Tanah">
     <meta name="theme-color" content="#2F3BA2" />
-    <!-- CODELAB: Add iOS meta tags and icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Weather PWA">
-    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
-    <title>TanahSubur Dashboard</title>
+    <title>Tanah Subur - Ganti Indikator Tanaman</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{url('images/icon/favicon.ico')}}">
     <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
@@ -31,10 +26,6 @@
     <!-- modernizr css -->
     <script src="{{url('js/vendor/modernizr-2.8.3.min.js')}}"></script>
     <link rel="manifest" href="/manifest.json">
-    <!--Carrousel -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -75,8 +66,8 @@
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="index.html">Home</a></li>
-                                <li><span>Dashboard</span></li>
+                                <li><a href="{{url("/")}}">Home</a></li>
+                                <li><span>Settings</span></li>
                             </ul>
                         </div>
                     </div>
@@ -85,50 +76,28 @@
             <!-- page title area end -->
             <div class="main-content-inner">
                 <!-- sales report area start -->
-                <div class="container bg-light">
-                <h1>Daftar Sensor</h1>
-                @for($i=0;$i<count($sensor);$i++)
-                  @if($sensor[$i]['Status'] == 'Berjalan' && $sensor[$i]['nilai'] > 75)
-                  <a href = "detailsensor/{{urlencode($sensor[$i]['nama_alat'])}}/{{urlencode($sensor[$i]['nama_tanaman'])}}" >
-                    <div class="col-lg-4 col-md-6 mt-5">
-                      <div class="card card-bordered bg-success" >
-                        <div class="card-header text-center title text-white">{{$sensor[$i]['nama_alat']}}</div>
-                        <div class="card-body text-left">
-                          <p class="card-text text-white">Status: {{$sensor[$i]['Status']}}</p>
-                          <p class="card-text text-white">Tanaman: {{$sensor[$i]['nama_tanaman']}}</p>
+                <div class="col-12 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Tanaman</h4>
+                            <form action="{{url('settings/tanaman/ubahtanaman/submit')}}" method="post">
+                              {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Indikator Tanaman Terpilih</label>
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="<?php echo $tanaman[0]['dipilih'];?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledSelect">Disabled select menu</label>
+                                    <select name="tanaman" id="disabledSelect" class="form-control">
+                                      @foreach (array_slice($tanaman,1) as $plant)
+                                        <option value="{{$plant['nama_tanaman']}}">{{ $plant['nama_tanaman'] }}</option>
+                                      @endforeach
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-4 pl-4 pr-4">Submit</button>
+                            </form>
                         </div>
-                        <div class="card-footer text-center title text-white">Nilai: {{$sensor[$i]['nilai']}}</div>
-                      </div>
                     </div>
-                  </a>
-                  @elseif($sensor[$i]['Status'] == 'Berjalan' && $sensor[$i]['nilai'] == 75)
-                  <a href = "detailsensor/{{urlencode($sensor[$i]['nama_alat'])}}/{{urlencode($sensor[$i]['nama_tanaman'])}}" >
-                    <div class="col-lg-4 col-md-6 mt-5">
-                      <div class="card card-bordered bg-warning text-white" >
-                        <div class="card-header text-center title text-white">{{$sensor[$i]['nama_alat']}}</div>
-                        <div class="card-body text-left">
-                          <p class="card-text text-white">Status: {{$sensor[$i]['Status']}}</p>
-                          <p class="card-text text-white">Tanaman: {{$sensor[$i]['nama_tanaman']}}</p>
-                        </div>
-                        <div class="card-footer text-center title text-white">Nilai: {{$sensor[$i]['nilai']}}</div>
-                      </div>
-                    </div>
-                  </a>
-                  @else
-                  <a href = "detailsensor/{{urlencode($sensor[$i]['nama_alat'])}}/{{urlencode($sensor[$i]['nama_tanaman'])}}" >
-                    <div class="col-lg-4 col-md-6 mt-5">
-                      <div class="card card-bordered bg-danger text-white" >
-                        <div class="card-header text-center title text-white">{{$sensor[$i]['nama_alat']}}</div>
-                        <div class="card-body text-left">
-                          <p class="card-text text-white">Status: {{$sensor[$i]['Status']}}</p>
-                          <p class="card-text text-white">Tanaman: {{$sensor[$i]['nama_tanaman']}}</p>
-                        </div>
-                        <div class="card-footer text-center title text-white">Nilai: {{$sensor[$i]['nilai']}}</div>
-                      </div>
-                    </div>
-                  </a>
-                  @endif
-                @endfor
                 </div>
                 <!-- sales report area end -->
             </div>
@@ -158,40 +127,15 @@
     <script src="{{url('js/scripts.js')}}"></script>
 
     <!-- test -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-          .then((reg) => {
-            console.log('Service worker registered.', reg);
-          });
-        });
+    <!-- <script>
+      var items = document.querySelectorAll("#list li");
+      for(var i = 0; i < items.length; i++)
+      {
+          items[i].onclick = function(){
+              document.getElementById("txt").value = this.innerHTML;
+          };
       }
-    </script>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-      var OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "ad49c20e-4ff5-4a5f-b374-7404ce2cfde4",
-        });
-      });
-    </script>
-    <script type="text/javascript">
-      OneSignal.push(function() {
-  /* These examples are all valid */
-      OneSignal.isPushNotificationsEnabled(function(isEnabled) {
-        if (isEnabled)
-          console.log("Push notifications are enabled!");
-        else{
-          console.log("Push notifications are not enabled yet.");    
-          OneSignal.push(function() {
-            OneSignal.showSlidedownPrompt();
-          });
-        }
-      });
-    });
-    </script>
+    </script> -->
 </body>
 
 </html>

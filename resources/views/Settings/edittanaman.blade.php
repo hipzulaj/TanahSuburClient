@@ -6,12 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Monitoring Keadaan Tanah">
     <meta name="theme-color" content="#2F3BA2" />
-    <!-- CODELAB: Add iOS meta tags and icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="Weather PWA">
-    <link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
-    <title>TanahSubur Dashboard</title>
+    <title>Tanah Subur - Edit Tanaman</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{url('images/icon/favicon.ico')}}">
     <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
@@ -31,10 +26,6 @@
     <!-- modernizr css -->
     <script src="{{url('js/vendor/modernizr-2.8.3.min.js')}}"></script>
     <link rel="manifest" href="/manifest.json">
-    <!--Carrousel -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -75,8 +66,8 @@
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="index.html">Home</a></li>
-                                <li><span>Dashboard</span></li>
+                                <li><a href="{{url("/")}}">Home</a></li>
+                                <li><span>Settings</span></li>
                             </ul>
                         </div>
                     </div>
@@ -85,50 +76,52 @@
             <!-- page title area end -->
             <div class="main-content-inner">
                 <!-- sales report area start -->
-                <div class="container bg-light">
-                <h1>Daftar Sensor</h1>
-                @for($i=0;$i<count($sensor);$i++)
-                  @if($sensor[$i]['Status'] == 'Berjalan' && $sensor[$i]['nilai'] > 75)
-                  <a href = "detailsensor/{{urlencode($sensor[$i]['nama_alat'])}}/{{urlencode($sensor[$i]['nama_tanaman'])}}" >
-                    <div class="col-lg-4 col-md-6 mt-5">
-                      <div class="card card-bordered bg-success" >
-                        <div class="card-header text-center title text-white">{{$sensor[$i]['nama_alat']}}</div>
-                        <div class="card-body text-left">
-                          <p class="card-text text-white">Status: {{$sensor[$i]['Status']}}</p>
-                          <p class="card-text text-white">Tanaman: {{$sensor[$i]['nama_tanaman']}}</p>
+                <div class="col-12 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Disabled forms</h4>
+                            <form action="{{url('settings/tanaman/edittanaman/submit'.'/'.$tanaman[0]['id'])}}" method="post">
+                              {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Nama Tanaman</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="nama_tanaman" value="{{$tanaman['0']['nama_tanaman']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah EC</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_ec" value="{{$tanaman['0']['batas_bawah_ec']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas EC</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_ec" value="{{$tanaman['0']['batas_atas_ec']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah PH</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_ph" value="{{$tanaman['0']['batas_bawah_ph']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas PH</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_ph" value="{{$tanaman['0']['batas_atas_ph']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah Temperatur</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_temp" value="{{$tanaman['0']['batas_bawah_temp']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas Temperatur</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_temp" value="{{$tanaman['0']['batas_atas_temp']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah Kelembapan</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_humid" value="{{$tanaman['0']['batas_bawah_humid']}}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas Kelembapan</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_humid" value="{{$tanaman['0']['batas_atas_humid']}}">
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-4 pl-4 pr-4">Submit</button>
+                            </form>
                         </div>
-                        <div class="card-footer text-center title text-white">Nilai: {{$sensor[$i]['nilai']}}</div>
-                      </div>
                     </div>
-                  </a>
-                  @elseif($sensor[$i]['Status'] == 'Berjalan' && $sensor[$i]['nilai'] == 75)
-                  <a href = "detailsensor/{{urlencode($sensor[$i]['nama_alat'])}}/{{urlencode($sensor[$i]['nama_tanaman'])}}" >
-                    <div class="col-lg-4 col-md-6 mt-5">
-                      <div class="card card-bordered bg-warning text-white" >
-                        <div class="card-header text-center title text-white">{{$sensor[$i]['nama_alat']}}</div>
-                        <div class="card-body text-left">
-                          <p class="card-text text-white">Status: {{$sensor[$i]['Status']}}</p>
-                          <p class="card-text text-white">Tanaman: {{$sensor[$i]['nama_tanaman']}}</p>
-                        </div>
-                        <div class="card-footer text-center title text-white">Nilai: {{$sensor[$i]['nilai']}}</div>
-                      </div>
-                    </div>
-                  </a>
-                  @else
-                  <a href = "detailsensor/{{urlencode($sensor[$i]['nama_alat'])}}/{{urlencode($sensor[$i]['nama_tanaman'])}}" >
-                    <div class="col-lg-4 col-md-6 mt-5">
-                      <div class="card card-bordered bg-danger text-white" >
-                        <div class="card-header text-center title text-white">{{$sensor[$i]['nama_alat']}}</div>
-                        <div class="card-body text-left">
-                          <p class="card-text text-white">Status: {{$sensor[$i]['Status']}}</p>
-                          <p class="card-text text-white">Tanaman: {{$sensor[$i]['nama_tanaman']}}</p>
-                        </div>
-                        <div class="card-footer text-center title text-white">Nilai: {{$sensor[$i]['nilai']}}</div>
-                      </div>
-                    </div>
-                  </a>
-                  @endif
-                @endfor
                 </div>
                 <!-- sales report area end -->
             </div>
@@ -158,40 +151,15 @@
     <script src="{{url('js/scripts.js')}}"></script>
 
     <!-- test -->
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/service-worker.js')
-          .then((reg) => {
-            console.log('Service worker registered.', reg);
-          });
-        });
+    <!-- <script>
+      var items = document.querySelectorAll("#list li");
+      for(var i = 0; i < items.length; i++)
+      {
+          items[i].onclick = function(){
+              document.getElementById("txt").value = this.innerHTML;
+          };
       }
-    </script>
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-    <script>
-      var OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "ad49c20e-4ff5-4a5f-b374-7404ce2cfde4",
-        });
-      });
-    </script>
-    <script type="text/javascript">
-      OneSignal.push(function() {
-  /* These examples are all valid */
-      OneSignal.isPushNotificationsEnabled(function(isEnabled) {
-        if (isEnabled)
-          console.log("Push notifications are enabled!");
-        else{
-          console.log("Push notifications are not enabled yet.");    
-          OneSignal.push(function() {
-            OneSignal.showSlidedownPrompt();
-          });
-        }
-      });
-    });
-    </script>
+    </script> -->
 </body>
 
 </html>

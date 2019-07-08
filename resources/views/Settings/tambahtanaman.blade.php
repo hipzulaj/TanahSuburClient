@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="description" content="Monitoring Keadaan Tanah">
     <meta name="theme-color" content="#2F3BA2" />
-    <title>srtdash - ICO Dashboard</title>
+    <title>Tanah Subur - Tambah Tanaman</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{url('images/icon/favicon.ico')}}">
     <link rel="stylesheet" href="{{url('css/bootstrap.min.css')}}">
@@ -52,68 +52,8 @@
                     <div class="col-md-6 col-sm-4 clearfix">
                         <ul class="notification-area pull-right">
                             <li><i class="ti-reload"></i></li>
-                            <li class="dropdown">
-                                <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
-                                    <span>2</span>
-                                </i>
-                                <div class="dropdown-menu bell-notify-box notify-box">
-                                    <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
-                                    <div class="nofity-list">
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
-                                            <div class="notify-text">
-                                                <p>You have Changed Your Password</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i></div>
-                                            <div class="notify-text">
-                                                <p>New Commetns On Post</p>
-                                                <span>30 Seconds ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-primary"></i></div>
-                                            <div class="notify-text">
-                                                <p>Some special like you</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i></div>
-                                            <div class="notify-text">
-                                                <p>New Commetns On Post</p>
-                                                <span>30 Seconds ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-primary"></i></div>
-                                            <div class="notify-text">
-                                                <p>Some special like you</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
-                                            <div class="notify-text">
-                                                <p>You have Changed Your Password</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="notify-item">
-                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
-                                            <div class="notify-text">
-                                                <p>You have Changed Your Password</p>
-                                                <span>Just Now</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="settings-btn">
-                                <i class="ti-settings"></i>
-                            </li>
+                            <a href="{{url('settings')}}"><li class="settings-btn"><i class="ti-settings"></i></li></a>
+                            <a href="{{url('logout')}}"><li><i class="ti-power-off"></i></li></a>
                         </ul>
                     </div>
                 </div>
@@ -126,7 +66,7 @@
                         <div class="breadcrumbs-area clearfix">
                             <h4 class="page-title pull-left">Dashboard</h4>
                             <ul class="breadcrumbs pull-left">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="{{url("/")}}">Home</a></li>
                                 <li><span>Settings</span></li>
                             </ul>
                         </div>
@@ -140,19 +80,43 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="header-title">Disabled forms</h4>
-                            <form action="{{url('ubahtanaman')}}" method="post">
+                            <form action="{{url('settings/tanaman/tambahtanaman/submit')}}" method="post">
                               {{ csrf_field() }}
                                 <div class="form-group">
-                                    <label for="disabledTextInput">Indikator Tanaman Terpilih</label>
-                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="<?php echo $tanaman[0]['dipilih'];?>">
+                                    <label for="disabledTextInput">Nama Tanaman</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="nama_tanaman">
                                 </div>
                                 <div class="form-group">
-                                    <label for="disabledSelect">Disabled select menu</label>
-                                    <select name="tanaman" id="disabledSelect" class="form-control">
-                                      @foreach (array_slice($tanaman,1) as $plant)
-                                        <option value="{{$plant['nama_tanaman']}}">{{ $plant['nama_tanaman'] }}</option>
-                                      @endforeach
-                                    </select>
+                                    <label for="disabledTextInput">Batas Bawah EC</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_ec">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas EC</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_ec">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah PH</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_ph">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas PH</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_ph">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah Temperatur</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_temp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas Temperatur</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_temp">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Bawah Kelembapan</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_bawah_humid">
+                                </div>
+                                <div class="form-group">
+                                    <label for="disabledTextInput">Batas Atas Kelembapan</label>
+                                    <input type="text" id="example-text-input" class="form-control" name="batas_atas_humid">
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-4 pl-4 pr-4">Submit</button>
                             </form>
